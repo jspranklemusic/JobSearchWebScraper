@@ -5,7 +5,6 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.static('build'));
-app.use(cors());
 
 class JobSearchObject{
   constructor(url, query, container, title, company, salary, description,link){
