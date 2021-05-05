@@ -21,7 +21,10 @@ body {
   padding:0.3rem;
   display: inline-block;
 }
-
+.loading-spinner{
+  font-size:10rem;
+  opacity:0.1;
+}
 
 
 p{
@@ -90,7 +93,7 @@ form > h1{
 form > button{
   margin:.5rem;
   padding:1rem 1.5rem;
-  width:10rem;
+  width:11rem;
 }
 
 input{
@@ -222,5 +225,26 @@ code {
   }
   100%{
     opacity:0;
+  }
+}
+
+
+@media only screen and (max-width:600px){
+  .mobile-only{
+    display:block;
+    flex-basis:100%;
+    margin-top:1rem;
+    padding:0;
+    background:rgba(24, 24, 56, 0.452);
+    height:3rem;
+  }
+  .mobile-only>h2{
+    padding:0;
+  }
+}
+
+@media only screen and (min-width:601px){
+  .mobile-only{
+    display:none;
   }
 }

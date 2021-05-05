@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 
 function App() {
 
@@ -7,14 +7,15 @@ function App() {
   const [location, setLocation] = useState("");
   const [terms, setTerms] = useState("");
   const [searching, setSearching] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(true);
+
+  const menuRef = useRef(null);
 
   async function fetchJobs(event){
     setSearching(true)
     event.preventDefault();
 
-    // let url = 'https://jobsearchwebscraper.josiahsprankle.repl.co/?';
         let url = '/api/?';
-
 
     url += 
       location && terms ? `location=${location}&terms=${terms}` :
@@ -33,25 +34,38 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={fetchJobs}>
+      <form ref={menuRef} style={{
+        transition:"0.2s",
+        transform:!menuVisible ? "translateY(calc(-100% + 3rem))" : "none",
+        overflow:"hidden"
+
+      }} onSubmit={fetchJobs}>
       <h1><i class="fas fa-layer-group"></i>&nbsp; My Job Search</h1>
       
         <div className="form-control">
             <label htmlFor="terms">Search terms, skills, or jobs.</label>
-            <input onInput={(e)=>setTerms(e.target.value)} id="terms" type="text" placeholder="Your terms here"/>
+            <input onInput={(e)=>setTerms(e.target.value)} id="terms" type="text" placeholder='(e.g. "Data Analyst")'/>
         </div>
         <div className="form-control">
           <label htmlFor="location">Search jobs by location</label>
-            <input onInput={(e)=>setLocation(e.target.value)}  id="location" placeholder="You location here" type="text"/>
+            <input onInput={(e)=>setLocation(e.target.value)}  id="location" placeholder='(e.g. "Kansas City" or "Remote")' type="text"/>
         </div>
         {!searching && <button type="submit"><i class="fas fa-search"></i> Search Jobs</button>}
         {searching && <button disabled type="submit"><i class="fas fa-compass spin-icon"></i> <span className="fading">Searching...</span></button>}
-        
+        <div className="mobile-only">
+           <h2 onClick={()=>setMenuVisible(state=>!state)}><i class="fas fa-chevron-circle-down"></i></h2>
+        </div>
       </form>
-      <p className="description"><i class="fas fa-info-circle"></i>&nbsp; Get instant results from companies such as Indeed, Flexjobs, and SimplyHired!</p>
-      <div className="loading-spinner">
-
-      </div>
+      <p style={{
+        transition:"0.4s",
+        marginTop:menuVisible ? "2rem" : `calc(-${menuRef.current.offsetHeight}px + 5rem)`
+      }} className="description"><i class="fas fa-info-circle"></i>&nbsp; Get instant results from companies such as Indeed, Flexjobs, and SimplyHired!</p>
+     
+      {searching &&
+         <div className="loading-spinner">
+            <i class="fas fa-circle-notch spin-icon"></i>
+         </div>
+      }
       {!searching &&
       <main className="fade-in">
        {[...data].map(job=>{
