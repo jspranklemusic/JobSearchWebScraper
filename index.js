@@ -51,7 +51,7 @@ app.get('/api',async (req,res)=>{
         url = "https://www.indeed.com",
         query = `/jobs?q=${terms}&l=${location}`,
         container='.jobsearch-SerpJobCard',
-        title="h2",
+        title=".jobtitle",
         company=".company",
         salary=".salaryText",
         description=".summary"

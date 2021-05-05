@@ -13,7 +13,7 @@ function App() {
     event.preventDefault();
 
     // let url = 'https://jobsearchwebscraper.josiahsprankle.repl.co/?';
-        let url = '/?';
+        let url = '/api/?';
 
 
     url += 
